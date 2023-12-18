@@ -3,6 +3,7 @@ import { IMG_CDN_URL } from "../constants";
 const RestrauntCard =({name , cloudinaryImageId,cuisines , avgRating})=>{
     //const {name , cloudinaryImageId,cuisines , avgRating} = restaurant.info;
     // console.log(name);
+    // console.log(true);
     return (
         <>
         <div className="card">
