@@ -1,14 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { restrauntList } from "../constants.js";
 import RestrauntCard from "./RestrauntCard";
+import Shimmer from "./Shimmer.js";
 
 //import * as obj from "src/"
 
 function filterData(searchInput , restaurants){
     const filterData = restaurants.filter((restaurant)=>
-    restaurant.info.name.includes(searchInput)
+    restaurant?.info?.name?.toLowerCase().includes(searchInput.toLowerCase())
     );
-
     return filterData;
 }
 
@@ -17,12 +17,29 @@ const Body = () =>{
 
     const [searchInput ,setSearchInput] = useState(""); 
 
-    const [text ,setText] = useState("false");
+    const [filteredRestaurants , setFilteredReaturants] = useState([]);
+    const [allRestaurants , setAllRestaurant] = useState([]);
 
-    const [restaurants , setRestaurant] = useState(restrauntList);
+    useEffect(()=>{
+        getRestaurants();
+    },[]);  
+    const [count , setCount] = useState(0);
 
-    return (
+    //console.log("Render");
+    async function getRestaurants()
+    {
+        const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.631233332220628&lng=77.37092480063438&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
+        const json = await data.json();
+        //console.log(json);
+        setAllRestaurant(json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+        setFilteredReaturants(json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+    }
+
+    return allRestaurants?.length == 0 ? (
+    <Shimmer />
+    ) : (
         <>
+        
         <div className="search-container">
             <input type="text" 
             className="search-input" 
@@ -32,19 +49,20 @@ const Body = () =>{
                 setSearchInput(e.target.value);
             }}
             />
-            
+            {/* <h2>{count}</h2>  for proof of Reconciliation in React */}
             <button className="search-btn"
             onClick={()=>{
                 //need to filter data
-                const data = filterData(searchInput , restaurants);
+                const data = filterData(searchInput , allRestaurants);
                 // updare the restaurants 
-                setRestaurant(data);
+                setFilteredReaturants(data);
+                //setCount(count+1);   Reconciliation 
             }}
             >Search</button>
         </div>
         <div className="restaurent-list">
             {
-                restaurants.map((restaurant)=>{
+                filteredRestaurants?.map((restaurant)=>{
                 return <RestrauntCard {...restaurant.info}  key={restaurant.info.id} />;
                 }
                 )
