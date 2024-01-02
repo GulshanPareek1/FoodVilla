@@ -38,7 +38,8 @@ return (!restaurant)? <Shimmer /> : (
         <div>
             <h1>MENU</h1>
             <ul>
-                {Object.values(restaurant?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card?.card?.itemCards).map((item) =>(
+                
+                {(restaurant?.cards[2]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card?.card?.itemCards).map((item) =>(
                 <li key={item?.card?.info?.id}>{item?.card?.info?.name}</li>
                 ))}
             </ul>

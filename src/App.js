@@ -10,6 +10,8 @@ import Error from "./components/Error";
 import Contact from "./components/Contact";
 import { Outlet } from "react-router-dom";
 import RestaurantMenu from "./components/RestaurantMenu";
+import Auth from "./components/Auth";
+import Profile from "./components/Profile";
 
 
 
@@ -98,7 +100,15 @@ const appRouter = createBrowserRouter(
         },
         {
           path: "/about",
-          element: <About />
+          element: <About />,
+          children:[{
+            path:"profile",
+            element:<Profile />
+          }]
+        },
+        {
+          path: "/login",
+          element: <Auth />
         },
         {
           path: "/contact",

@@ -11,7 +11,7 @@ const RestrauntCard =({name , cloudinaryImageId,cuisines , avgRating})=>{
             +cloudinaryImageId
             } />
             <h2>{name}</h2>
-            <h3 className="h3">{cuisines.join(",")}</h3>
+            <h3 className="h3">{cuisines.join(", ")}</h3>
             <h4>{avgRating} stars</h4>
         </div>
         </>

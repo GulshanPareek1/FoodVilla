@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Logo from "../assets/img/foodvilla.png";
 import {Link} from "react-router-dom";
+import Auth from "./Auth";
 
 const Title = () =>(
     <a href="/">
@@ -12,7 +13,7 @@ const Title = () =>(
 
 
 const HeaderComponent = () =>{
-        const [isLoggedin , setIsLoggedin] = useState(true);
+    const [isLoggedin , setIsLoggedin] = useState(true);
         return (
             <div className="header">
             <Title />
@@ -33,20 +34,20 @@ const HeaderComponent = () =>{
                     </li>
                     <li>Cart</li>
                     <li>
-                    {isLoggedin ? (
-                        <button className="logout-btn"
-                        onClick={()=>setIsLoggedin(false)}
-                        >
-                            logout
-                        </button>
-                    )
-                    : (
-                        <button className="login-btn" onClick={()=> setIsLoggedin(true)}>
-                            login
-                        </button>
-                    )}
-
-
+                        <Link to="/login">
+                                {  isLoggedin ? (
+                                <button className="logout-btn"
+                                onClick={()=>setIsLoggedin(false)}>
+                                    logout
+                                </button>
+                                )
+                                : (
+                                    <button className="login-btn" onClick={()=> setIsLoggedin(true)}>
+                                        login
+                                    </button>
+                                )
+                                }
+                        </Link>
                     </li>
                 </ul>
             </div>
