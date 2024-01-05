@@ -1,6 +1,5 @@
 //import React from "react";
 import ReactDOM  from "react-dom/client";
-
 import HeaderComponent from "./components/Header";
 import Body from "./components/Body";
 import Footer from "./components/Footer";
@@ -12,8 +11,11 @@ import { Outlet } from "react-router-dom";
 import RestaurantMenu from "./components/RestaurantMenu";
 import Auth from "./components/Auth";
 import Profile from "./components/Profile";
+import { lazy , Suspense} from "react";
+import Shimmer from "./components/Shimmer";
+//import Instamart from "./components/Instamart";
 
-
+const Instamart = lazy(()=> import("./components/Instamart"));
 
 // const heading = React.createElement("h1",{
 //     id:"title",
@@ -117,7 +119,15 @@ const appRouter = createBrowserRouter(
         {
           path: "/restaurant/:resId",
           element: <RestaurantMenu />
-        }
+        },
+        {
+          path: "/instamart",
+          element: (
+            <Suspense fallback={<Shimmer />}>
+              <Instamart />
+            </Suspense>
+          ),
+        },
       ]
     }
     

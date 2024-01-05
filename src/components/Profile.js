@@ -3,16 +3,16 @@ import { useState , useEffect } from "react";
 const Profile = (props)=>{
     const [count , setCount] = useState(0);
     const [count2 , setCount2] = useState(0);
-    useEffect(async ()=>{
+    useEffect(()=>{
         //API call
-        console.log("useEffect");
+        //console.log("useEffect");
         // const timer = setInterval(()=>{
         //     console.log("Timer is start");
         // },1000);
 
         return ()=>{
             //clearInterval(timer); 
-            console.log("return"); 
+            //console.log("return"); 
         };
 
     },[]);

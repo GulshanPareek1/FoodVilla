@@ -3,21 +3,14 @@ import { restrauntList } from "../constants.js";
 import RestrauntCard from "./RestrauntCard";
 import Shimmer from "./Shimmer.js";
 import { Link } from "react-router-dom";
-
+import { filterData } from "../utils/helper.js";
+import useOnline from "../utils/useOnline.js";
 //import * as obj from "src/"
-
-function filterData(searchInput , restaurants){
-    const filterData = restaurants?.filter((restaurant)=>
-    restaurant?.info?.name?.toLowerCase().includes(searchInput.toLowerCase())
-    );
-    return filterData;
-}
 
 
 const Body = () =>{
-
+    
     const [searchInput ,setSearchInput] = useState(""); 
-
     const [filteredRestaurants , setFilteredReaturants] = useState([]);
     const [allRestaurants , setAllRestaurant] = useState([]);
 
@@ -33,10 +26,20 @@ const Body = () =>{
         const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=23.0224734&lng=72.5715931&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING");
         const json = await data.json();
         //console.log(json);
-        setAllRestaurant(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
-        setFilteredReaturants(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+        setAllRestaurant(json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+        setFilteredReaturants(json?.data?.cards[2]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
     }
 
+     // here we're constructing logic for offline and online of page 
+    // const isOnline = useOnline();
+     // here we made a custom hook 
+    
+    // if(!isOnline){
+    //     return <h1>🔴You're Offline , please turn on your internet !!</h1>;
+    // }
+    // removing this code bcz we used this logic in header to show online or offline 
+
+    
     return allRestaurants?.length == 0 ? (
     <Shimmer />
     ) : (
