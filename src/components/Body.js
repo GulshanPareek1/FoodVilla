@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState ,useContext } from "react";
 import { restrauntList } from "../constants.js";
 import RestrauntCard from "./RestrauntCard";
 import Shimmer from "./Shimmer.js";
 import { Link } from "react-router-dom";
 import { filterData } from "../utils/helper.js";
 import useOnline from "../utils/useOnline.js";
+import UserContext from "../utils/UserContext.js";
 //import * as obj from "src/"
 
 
@@ -39,15 +40,15 @@ const Body = () =>{
     // }
     // removing this code bcz we used this logic in header to show online or offline 
 
-    
+    const {user , setUser} = useContext(UserContext);
     return allRestaurants?.length == 0 ? (
     <Shimmer />
     ) : (
         <>
         
-        <div className="search-container">
+        <div className="search-container p-3  bg-gray-100 my-3">
             <input type="text" 
-            className="search-input" 
+            className=" focus:bg-slate-200 p-2  m-2" 
             placeholder="Search" 
             value={searchInput}
             onChange={(e)=>{
@@ -55,7 +56,7 @@ const Body = () =>{
             }}
             />
             {/* <h2>{count}</h2>  for proof of Reconciliation in React */}
-            <button className="search-btn"
+            <button className="p-2 m-2 bg-green-800 hover:bg-sky-700 text-white rounded-lg"
             onClick={()=>{
                 //need to filter data
                 const data = filterData(searchInput , allRestaurants);
@@ -64,8 +65,16 @@ const Body = () =>{
                 //setCount(count+1);   Reconciliation 
             }}
             >Search</button>
+            <input type="text"  value={user.name}
+            onChange={
+                (e)=>setUser({
+                    name:e.target.value
+                })
+            }
+            />
         </div>
-        <div className="restaurent-list">
+        
+        <div className="flex flex-wrap">
             {
                 filteredRestaurants?.map((restaurant)=>{
                 return ( <Link 

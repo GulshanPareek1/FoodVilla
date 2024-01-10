@@ -2,23 +2,10 @@ import { Outlet } from "react-router-dom";
 import ProfileFunctional from "./Profile";
 import Profile from "./ProfileClass";
 import {Component} from "react";
-
+import UserContext from "../utils/UserContext";
 // not using as of now bcz of classbased component 
 // functional component
-const About2 = () =>{
-    return (
-        <>
-        <div>
-            <h1>About us</h1>
-            <p>This is the first attempt to learn react-router from ...</p>
-        </div>
-        <ProfileFunctional name={"Gulshan Pareek"}/>
-        <Profile Name={"Gulshan but class wala"}/>
-        
-        
-        </>
-    );
-};
+
 // use class based component for about component 
 class About extends Component{
     constructor(props){
@@ -42,6 +29,11 @@ render()
         <>
         <div>
             <h1>About us</h1>
+            <UserContext.Consumer>
+                {({user})=>(
+                    <h4 className="font-bold text-lg p-7">{user.name}-{user.email}</h4>
+                )}
+            </UserContext.Consumer>
             <p>This is the first attempt to learn react-router from ...</p>
         </div>
         <ProfileFunctional name={"Gulshan Pareek"}/>

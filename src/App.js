@@ -11,9 +11,10 @@ import { Outlet } from "react-router-dom";
 import RestaurantMenu from "./components/RestaurantMenu";
 import Auth from "./components/Auth";
 import Profile from "./components/Profile";
-import { lazy , Suspense} from "react";
+import { lazy , Suspense, useState} from "react";
 import Shimmer from "./components/Shimmer";
 //import Instamart from "./components/Instamart";
+import UserContext from "./utils/UserContext";
 
 const Instamart = lazy(()=> import("./components/Instamart"));
 
@@ -71,21 +72,24 @@ const Instamart = lazy(()=> import("./components/Instamart"));
 // footer.appendChild(para);
 
 
-
-const styleObj = {
-    backgroundColor : "none",
-};
-
 {/* // destructure the parameter(props) */}
 
-
 const AppLayout = () =>{
+      const [user, setUser] = useState({
+        name:"Gulshan Pareek",
+        email:"pareek123@gmail.com"
+    })
     return(
-        <div className="whole">
+        <UserContext.Provider 
+        value={{
+          user:user,
+          setUser:setUser,
+        }}
+        >
         <HeaderComponent />
         <Outlet />
         <Footer />
-        </div>
+        </UserContext.Provider>
     );
 };
 
